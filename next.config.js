@@ -7,10 +7,8 @@ const nextConfig = {
         hostname: '**',
       },
     ],
-    unoptimized: true,
+    domains: ['localhost', 'your-domain.vercel.app'],
   },
-  output: 'export',
-  trailingSlash: true,
   basePath: '',
   assetPrefix: '',
 }

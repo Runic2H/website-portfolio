@@ -37,7 +37,9 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
   // For local images, use relative paths from the public directory
   const projectMedia = project.media ?? [{
     type: 'image' as const,
-    src: `/assets/projects/${project.image}`, // Assuming images are in public/assets/projects/
+    src: project.image.startsWith('http') 
+      ? project.image 
+      : `/assets/projects/${project.image}`,
     alt: project.title
   }];
 
@@ -75,6 +77,11 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     priority={true}
                     className="object-cover"
+                    onError={(e) => {
+                      console.error(`Failed to load image: ${project.image}`);
+                      // Optionally set a fallback image
+                      e.currentTarget.src = '/assets/fallback-image.jpg';
+                    }}
                   />
                 )}
               </motion.div>
