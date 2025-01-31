@@ -34,10 +34,10 @@ interface ProjectModalProps {
 }
 
 export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
-  // Remove the legacy images mapping since we're using the media property now
+  // For local images, use relative paths from the public directory
   const projectMedia = project.media ?? [{
     type: 'image' as const,
-    src: project.image, // Use the single image as fallback
+    src: `/assets/projects/${project.image}`, // Assuming images are in public/assets/projects/
     alt: project.title
   }];
 
@@ -72,6 +72,8 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                     src={project.image}
                     alt={project.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    priority={true}
                     className="object-cover"
                   />
                 )}

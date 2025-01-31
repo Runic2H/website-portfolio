@@ -192,7 +192,7 @@ const projects = [
     longDescription: "A personal project just to showcase my projects and skills.",
     technologies: ["Next.js", "Tailwind CSS", "Framer Motion"],
     tags: ["Personal Projects"],
-    liveUrl: "https://playcanv.as/p/NTxxXKUF/",
+    liveUrl: "elton-portfolio-lime.vercel.app",
   },
   // ... add more projects
 ]
