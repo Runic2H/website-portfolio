@@ -34,12 +34,12 @@ interface ProjectModalProps {
 }
 
 export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
-  // Convert legacy images array to media format if it exists
-  const projectMedia = project.media ?? project.images?.map(image => ({
+  // Remove the legacy images mapping since we're using the media property now
+  const projectMedia = project.media ?? [{
     type: 'image' as const,
-    src: image,
+    src: project.image, // Use the single image as fallback
     alt: project.title
-  }))
+  }];
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

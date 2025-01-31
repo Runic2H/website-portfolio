@@ -3,6 +3,7 @@ import { Geist, Azeret_Mono as Geist_Mono } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
+import { ActiveSectionProvider } from "@/context/active-section-context"
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -30,9 +31,11 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <Header />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
+          <ActiveSectionProvider>
+            <Header />
+            <main className="min-h-screen">{children}</main>
+            <Footer />
+          </ActiveSectionProvider>
         </ThemeProvider>
       </body>
     </html>

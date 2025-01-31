@@ -5,7 +5,7 @@ import Link from "next/link"
 import { ModeToggle } from "./mode-toggle"
 import { Button } from "./ui/button"
 import { Menu } from "lucide-react"
-import { useActiveSection } from "@/hooks/use-active-section"
+import { useActiveSection } from "@/context/active-section-context"
 import { cn } from "@/lib/utils"
 
 const Header = () => {
