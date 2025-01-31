@@ -20,16 +20,16 @@ const projects = [
   {
     title: "SlimeRush - Software Engineering Project 1",
     description: "A 2D rogue-like shooter game developed using a DigiPen's in house game C engine, CProcessing.",
-    image: getAssetPath('/assets/projects/1.jpg'),
+    image: "/assets/projects/1.jpg",
     media: [
       {
         type: 'image' as const,
-        src: getAssetPath('/assets/projects/SR.gif'),
+        src: "/assets/projects/SR.gif",
         alt: "SlimeRush Gameplay"
       },
       {
         type: 'image' as const,
-        src: getAssetPath('/assets/projects/1.jpg'),
+        src: "/assets/projects/1.jpg",
         alt: "SlimeRush Screenshot"
       },
     ],
@@ -50,7 +50,7 @@ const projects = [
     media: [
       {
         type: 'video' as const,
-        src: getAssetPath('/assets/projects/Project_Duck.mp4'),
+        src: "/assets/projects/Project_Duck.mp4",
         alt: "Project DUCK! 2 Minute Gameplay",
         poster: "/assets/projects/2.jpg",
         playsInline: true,
