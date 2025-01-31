@@ -13,23 +13,23 @@ import { ExternalLink } from "lucide-react"
 import confetti from 'canvas-confetti';
 import { motion, useScroll } from "framer-motion"
 import ContactForm from "../components/contact-form";
-import { getAssetPath } from '@/utils/assetPath';
+
 
 // Project data
 const projects = [
   {
     title: "SlimeRush - Software Engineering Project 1",
     description: "A 2D rogue-like shooter game developed using a DigiPen's in house game C engine, CProcessing.",
-    image: "/assets/projects/1.jpg",
+    image: "./assets/projects/1.jpg",
     media: [
       {
         type: 'image' as const,
-        src: "/assets/projects/SR.gif",
+        src: "./assets/projects/SR.gif",
         alt: "SlimeRush Gameplay"
       },
       {
         type: 'image' as const,
-        src: "/assets/projects/1.jpg",
+        src: "./assets/projects/1.jpg",
         alt: "SlimeRush Screenshot"
       },
     ],
@@ -46,11 +46,11 @@ const projects = [
   {
     title: "Project DUCK! - Software Engineering Project 2",
     description: "A 2D adventure game built using DigiPen's in house game C++ engine, Alpha.",
-    image: "/assets/projects/2.jpg",
+    image: "./assets/projects/2.jpg",
     media: [
       {
         type: 'video' as const,
-        src: "/assets/projects/Project_Duck.mp4",
+        src: "./assets/projects/Project_Duck.mp4",
         alt: "Project DUCK! 2 Minute Gameplay",
         poster: "/assets/projects/2.jpg",
         playsInline: true,
@@ -76,17 +76,17 @@ const projects = [
   {
     title: "Exomata - Software Engineering Project 3",
     description: "A 2.5D Hack and Slash game using a custom built C++ game engine, ExoEngine.",
-    image: "/assets/projects/5.jpg",
+    image: "./assets/projects/5.jpg",
     media: [
       {
         type: 'video' as const,
-        src: "/assets/projects/DnG.mp4",
+        src: "./assets/projects/DnG.mp4",
         alt: "Exomata Showcase",
-        poster: "/assets/projects/5.jpg",
+        poster: "./assets/projects/5.jpg",
       },
       {
         type: 'image' as const,
-        src: "/assets/projects/5.jpg",
+        src: "./assets/projects/5.jpg",
         alt: "Exomata Screenshot"
       },
     ],
@@ -107,13 +107,13 @@ const projects = [
   {
     title: "Disinheritance - Software Engineering Project 4",
     description: "A 3D story-based stealth horror game using a custom built C++ game engine, GAM300Engine.",
-    image: "/assets/projects/6.png",
+    image: "./assets/projects/6.png",
     media: [
       {
         type: 'video' as const,
-        src: "/assets/projects/Disinheritance.mp4",
+        src: "./assets/projects/Disinheritance.mp4",
         alt: "Disinheritance Showcase",
-        poster: "/assets/projects/6.png",
+        poster: "./assets/projects/6.png",
       },
     ],
     longDescription: "Technical Lead and Backend Developer for GAM300Engine, a custom 3D game engine for our story-based stealth horror game, built using C++ and Vulcan. A thief set out to reclaim his family's rightful inheritance, but soon discovers the horrors that lie within the mansion and his family's dark secrets. Will he be able to escape?",
@@ -135,11 +135,11 @@ const projects = [
   {
     title: "Fox Hunt - Personal Project",
     description: "A 2D Hyper Casual Platformer built using PlayCanvas Game Engine.",
-    image: "/assets/projects/4.jpg",
+    image: "./assets/projects/4.jpg",
     media: [
       {
         type: 'image' as const,
-        src: "/assets/projects/4.jpg",
+        src: "./assets/projects/4.jpg",
         alt: "Fox Hunt Showcase",
       },
     ],
@@ -156,11 +156,11 @@ const projects = [
   {
     title: "My Portfolio Website - Personal Project",
     description: "A portfolio website built using Next.js, Tailwind CSS, and Framer Motion.",
-    image: "/assets/gallery/bg.jpg",
+    image: "./assets/gallery/bg.jpg",
     media: [
       {
         type: 'image' as const,
-        src: "/assets/gallery/bg.jpg",
+        src: "./assets/gallery/bg.jpg",
         alt: "My Portfolio Website Showcase",
       },
     ],
@@ -197,7 +197,7 @@ const experienceData = [
 const aboutMeMedia = [
   {
     type: 'image' as const,
-    src: "/assets/gallery/aboutme1.jpg",
+    src: "public/assets/gallery/aboutme1.jpg",
     alt: "Graduating with a Diploma in Information Technology",
   },
   {
