@@ -13,22 +13,23 @@ import { ExternalLink } from "lucide-react"
 import confetti from 'canvas-confetti';
 import { motion, useScroll } from "framer-motion"
 import ContactForm from "../components/contact-form";
+import { getAssetPath } from '@/utils/assetPath';
 
 // Project data
 const projects = [
   {
     title: "SlimeRush - Software Engineering Project 1",
     description: "A 2D rogue-like shooter game developed using a DigiPen's in house game C engine, CProcessing.",
-    image: "/assets/projects/1.jpg",
+    image: getAssetPath('/assets/projects/1.jpg'),
     media: [
       {
         type: 'image' as const,
-        src: "/assets/projects/SR.gif",
+        src: getAssetPath('/assets/projects/SR.gif'),
         alt: "SlimeRush Gameplay"
       },
       {
         type: 'image' as const,
-        src: "/assets/projects/1.jpg",
+        src: getAssetPath('/assets/projects/1.jpg'),
         alt: "SlimeRush Screenshot"
       },
     ],
@@ -49,9 +50,12 @@ const projects = [
     media: [
       {
         type: 'video' as const,
-        src: "/assets/projects/Project_Duck.mp4",
+        src: getAssetPath('/assets/projects/Project_Duck.mp4'),
         alt: "Project DUCK! 2 Minute Gameplay",
         poster: "/assets/projects/2.jpg",
+        playsInline: true,
+        controls: true,
+        preload: "none",
       },
     ],
     longDescription: "Project Lead and Level Programmer for a top-down adventure video game built using DigiPen's in house game C++ engine, Alpha. Project DUCK! is a reaction-based adventure game where the player must find his way to the other side of the pond and fight back against the evil turtles.",
@@ -163,7 +167,7 @@ const projects = [
     longDescription: "A personal project just to showcase my projects and skills.",
     technologies: ["Next.js", "Tailwind CSS", "Framer Motion"],
     tags: ["Personal Projects"],
-    liveUrl: "elton-portfolio-lime.vercel.app",
+    liveUrl: "https://runic2h-website.vercel.app/",
   },
   // ... add more projects
 ]

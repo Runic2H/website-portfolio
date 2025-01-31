@@ -6,6 +6,7 @@ import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "./ui/button"
+import { getAssetPath } from "@/utils/assetPath"
 
 interface CarouselMedia {
   type: 'image' | 'video'
@@ -120,6 +121,10 @@ export function ImageCarousel({
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 50vw"
                     priority={index === 0}
+                    onError={(e) => {
+                      console.error(`Failed to load image: ${item.src}`);
+                      e.currentTarget.src = getAssetPath('/assets/fallback.jpg');
+                    }}
                   />
                 )}
               </div>
