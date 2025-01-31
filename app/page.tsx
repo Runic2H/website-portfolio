@@ -1,10 +1,10 @@
-"use client"
+// Create a new ClientPage component for interactive elements
+'use client'
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
 import Link from "next/link"
-import { ModeToggle } from "@/components/mode-toggle"
 import { ImageCarousel } from "@/components/image-carousel"
 import { AnimatedHeadline } from "@/components/animated-headline"
 import { useState, useEffect } from "react"
@@ -13,7 +13,6 @@ import { ExternalLink } from "lucide-react"
 import confetti from 'canvas-confetti';
 import { motion, useScroll } from "framer-motion"
 import ContactForm from "../components/contact-form";
-
 
 // Project data
 const projects = [
@@ -151,34 +150,6 @@ const projects = [
     liveUrl: "https://playcanv.as/p/NTxxXKUF/",
   },
   {
-    title: "Disinheritance - Software Engineering Project 4",
-    description: "A 3D story-based stealth horror game using a custom built C++ game engine, GAM300Engine.",
-    image: "/assets/projects/6.png",
-    media: [
-      {
-        type: 'video' as const,
-        src: "/assets/projects/Disinheritance.mp4",
-        alt: "Disinheritance Showcase",
-        poster: "/assets/projects/6.png",
-      },
-    ],
-    longDescription: "Technical Lead and Backend Developer for GAM300Engine, a custom 3D game engine for our story-based stealth horror game, built using C++ and Vulcan. A thief set out to reclaim his family's rightful inheritance, but soon discovers the horrors that lie within the mansion and his family's dark secrets. Will he be able to escape?",
-    technologies: ["C++", "Vulcan", "IMGUI" , "FMOD", ".NET", "C#"],
-    features: [
-      "A custom built 3D game engine",
-      "A lockpicking minigame with stealth mechanics",
-      "JUMPSCARES!",
-      "Immersive Sound Design with directional sfx and ambient noises",
-    ],
-    contributions: [
-      "Developed a Custom Scripting Language using .NET to allow game designers to work on the game using C#",
-      "Developed custom functions that emulate features on the Unity Game Engine for ease of use for gameplay designers",
-      "Developed custom scripts for Hot Reloading of game engine when altering game level",
-      "Handled merge conflicts and managed Git repository",
-    ],
-    tags: ["Games", "School Projects"],
-  },
-  {
     title: "My Portfolio Website - Personal Project",
     description: "A portfolio website built using Next.js, Tailwind CSS, and Framer Motion.",
     image: "/assets/gallery/bg.jpg",
@@ -237,7 +208,7 @@ const aboutMeMedia = [
   },
 ]
 
-export default function Page() {
+const ClientPage = () => {
   const { scrollYProgress } = useScroll()
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null)
   const [isVisible, setIsVisible] = useState(true)
@@ -666,5 +637,10 @@ export default function Page() {
       </main>
     </div>
   )
+}
+
+// Make the main Page component a server component
+export default function Page() {
+  return <ClientPage />
 }
 

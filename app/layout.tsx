@@ -1,3 +1,4 @@
+import './globals.css'
 import type { Metadata } from "next"
 import { Geist, Azeret_Mono as Geist_Mono } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -8,13 +9,16 @@ import { ActiveSectionProvider } from "@/context/active-section-context"
 const geistSans = Geist({
   subsets: ["latin"],
   variable: "--font-sans",
+  display: 'swap',
 })
 const geistMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://runic2h.github.io'),
   title: "Elton Teo | Portfolio",
   description: "Personal portfolio of Elton Teo, showcasing skills and projects in frontend development and software engineering.",
   icons: {
@@ -41,7 +45,3 @@ export default function RootLayout({
     </html>
   )
 }
-
-
-
-import './globals.css'
