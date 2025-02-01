@@ -24,7 +24,7 @@ export default function Page() {
   const [isVisible, setIsVisible] = useState(true)
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const prefersReducedMotion = useReducedMotion()
+  const shouldReduceMotion = useReducedMotion()
     // Project data
   const projects = [
     {
@@ -311,31 +311,14 @@ export default function Page() {
     return index < 3
   }
 
-  // Optimize animation configs
-  const fadeInAnimation = {
-    initial: { opacity: 0, y: prefersReducedMotion ? 0 : 20 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { margin: "-100px", once: true },
-    transition: { duration: 0.5 }
-  }
-
-  const cardHoverAnimation = prefersReducedMotion 
-    ? {}
-    : {
-        whileHover: { 
-          scale: 1.02,
-          transition: { type: "tween", duration: 0.2 }
-        }
-      }
-
   return (
     <div className="min-h-screen gradient-background">
       <main className="flex-1">
         {/* Hero Section */}
         <motion.section 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: shouldReduceMotion ? 0.4 : 0.8 }}
           className="relative w-full min-h-screen flex flex-col container max-w-screen-xl mx-auto px-4 md:px-6"
         >
           {/* Main content wrapper with flex column */}
@@ -390,15 +373,15 @@ export default function Page() {
               className="flex justify-center pb-16"
               initial={{ opacity: 0 }}
               animate={{ opacity: isVisible ? 1 : 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: shouldReduceMotion ? 0.2 : 0.3 }}
             >
               <motion.div 
                 className="cursor-pointer"
-                initial={{ opacity: 0, y: -10 }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : -10 }}
                 animate={{ opacity: isVisible ? 1 : 0, y: 0 }}
                 transition={{ 
-                  duration: 1,
-                  repeat: isVisible ? Infinity : 0,
+                  duration: shouldReduceMotion ? 0.5 : 1,
+                  repeat: (isVisible && !shouldReduceMotion) ? Infinity : 0,
                   repeatType: "reverse"
                 }}
               >
@@ -429,10 +412,10 @@ export default function Page() {
 
         {/* About Section */}
         <motion.section 
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ margin: "-100px" }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: shouldReduceMotion ? 0.4 : 0.8 }}
           id="about" 
           className="w-full py-12 md:py-24"
         >
@@ -476,14 +459,14 @@ export default function Page() {
 
         {/* Projects Section */}
         <motion.section 
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ margin: "-100px" }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: shouldReduceMotion ? 0.4 : 0.8 }}
           id="projects" 
           className="w-full py-12 md:py-24"
         >
-          <div className="container max-w-screen-xl mx-auto px-4 md:px-6">
+          <div className="container max-w-screen-xl mx-auto px-4 md:px-6 min-h-[40vh]">
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -516,15 +499,15 @@ export default function Page() {
             </div>
 
             {/* Projects Grid */}
-            <div className="max-w-4xl mx-auto grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="max-w-4xl mx-auto grid gap-4 md:grid-cols-2 lg:grid-cols-3 min-h-[40vh]">
               {filteredProjects.map((project, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ margin: "-100px" }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  whileHover={{ 
+                  transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : index * 0.1 }}
+                  whileHover={shouldReduceMotion ? {} : { 
                     scale: 1.05,
                     rotateY: 5,
                     boxShadow: "0px 5px 15px rgba(0,0,0,0.1)"
@@ -569,10 +552,10 @@ export default function Page() {
 
         {/* Experience Section */}
         <motion.section 
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ margin: "-100px" }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: shouldReduceMotion ? 0.4 : 0.8 }}
           id="experience" 
           className="w-full py-12 md:py-24"
         >
@@ -595,7 +578,7 @@ export default function Page() {
                   className="absolute left-1/2 top-0 h-full w-0.5 bg-primary/20 -ml-0.5"
                   initial={{ height: 0 }}
                   whileInView={{ height: "100%" }}
-                  transition={{ duration: 1.5 }}
+                  transition={{ duration: shouldReduceMotion ? 0.7 : 1.5 }}
                 />
 
                 {/* Experience Items - removing animations from cards */}
@@ -642,10 +625,10 @@ export default function Page() {
 
         {/* Contact Section */}
         <motion.section 
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ margin: "-100px" }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: shouldReduceMotion ? 0.4 : 0.8 }}
           id="contact" 
           className="w-full py-12 md:py-24"
         >
