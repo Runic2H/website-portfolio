@@ -14,9 +14,6 @@ import { ExternalLink } from "lucide-react"
 import confetti from 'canvas-confetti';
 import { motion, useScroll } from "framer-motion"
 import ContactForm from "../components/contact-form";
-import aboutMe1 from "@/assets/gallery/aboutme1.jpg"
-import aboutMe2 from "@/assets/gallery/aboutme2.jpg"
-import aboutMe3 from "@/assets/gallery/aboutme3.jpg"
 
 
 // Project data
@@ -198,17 +195,17 @@ const experienceData = [
 const aboutMeMedia = [
   {
     type: 'image' as const,
-    src: aboutMe1,
+    src: '/assets/gallery/aboutme1.jpg',
     alt: "Graduating with a Diploma in Information Technology",
   },
   {
     type: 'image' as const,
-    src: aboutMe2,
+    src: '/assets/gallery/aboutme2.jpg',
     alt: "Awards Night 2019",
   },
   {
     type: 'image' as const,
-    src: aboutMe3,
+    src: '/assets/gallery/aboutme3.jpg',
     alt: "Promotion to 2nd Sergeant in the Singapore Armed Forces",
   },
 ]
@@ -511,6 +508,8 @@ export default function Page() {
                           src={project.image}
                           alt={project.title}
                           fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          priority={index === 0}
                           className="object-cover transition-transform group-hover:scale-105"
                         />
                       </div>
