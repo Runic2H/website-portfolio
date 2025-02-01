@@ -29,8 +29,8 @@ export default function Page() {
       image: "/assets/projects/1.jpg",
       media: [
         {
-          type: 'image' as const,
-          src: "/assets/projects/SR.gif",
+          type: 'video' as const,
+          src: "/assets/projects/SR.mp4",
           alt: "SlimeRush Gameplay"
         },
         {
@@ -83,7 +83,7 @@ export default function Page() {
       media: [
         {
           type: 'video' as const,
-          src: "/assets/projects/Dng.mp4",
+          src: "/assets/projects/Exomata.mp4",
           alt: "Exomata Showcase",
           poster: "/assets/projects/5.jpg",
         },
@@ -170,7 +170,7 @@ export default function Page() {
       longDescription: "A personal project just to showcase my projects and skills.",
       technologies: ["Next.js", "Tailwind CSS", "Framer Motion"],
       tags: ["Personal Projects"],
-      liveUrl: "runic2h-website.vercel.app",
+      liveUrl: "https://runic2h-website.vercel.app/",
     },
     // ... add more projects
   ]
@@ -260,29 +260,6 @@ export default function Page() {
       spread: 160,
       origin: { x: 0.5, y: 0.5 }
     });
-
-    // Add delayed bursts for continuous effect
-    setTimeout(() => {
-      confetti({
-        particleCount: 100,
-        spread: 120,
-        origin: { x: 0.2, y: 0.5 }
-      });
-      confetti({
-        particleCount: 100,
-        spread: 120,
-        origin: { x: 0.8, y: 0.5 }
-      });
-    }, 250);
-
-    // Final burst
-    setTimeout(() => {
-      confetti({
-        particleCount: 150,
-        spread: 160,
-        origin: { x: 0.5, y: 0.5 }
-      });
-    }, 500);
   };
 
   // Get unique tags from all projects
@@ -294,6 +271,26 @@ export default function Page() {
   const filteredProjects = selectedFilter
     ? projects.filter(project => project.tags.includes(selectedFilter))
     : projects
+
+  // Add this function near your other functions
+  const scrollToContact = () => {
+    // Trigger confetti first
+    handleConfetti();
+    
+    // Then scroll after a short delay to allow confetti to be visible
+    setTimeout(() => {
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        const windowHeight = window.innerHeight;
+        const targetPosition = contactSection.getBoundingClientRect().top + window.scrollY;
+        
+        window.scrollTo({
+          top: targetPosition - (windowHeight / 4),
+          behavior: 'smooth'
+        });
+      }
+    }, 100); // Small delay to ensure confetti is visible
+  };
 
   return (
     <div className="min-h-screen gradient-background">
@@ -327,18 +324,8 @@ export default function Page() {
                   </div>
                   <div className="space-x-4">
                     <Button 
-                      onClick={(e) => {
-                        handleConfetti();
-                        const contactSection = document.getElementById('contact');
-                        if (contactSection) {
-                          const windowHeight = window.innerHeight;
-                          const targetPosition = contactSection.getBoundingClientRect().top + window.scrollY;
-                          window.scrollTo({
-                            top: targetPosition - (windowHeight / 4),
-                            behavior: 'smooth'
-                          });
-                        }
-                      }}
+                      onClick={scrollToContact}
+                      className="relative z-20"
                     >
                       Contact Me
                     </Button>
