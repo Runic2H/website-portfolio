@@ -121,10 +121,6 @@ export function ImageCarousel({
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 50vw"
                     priority={index === 0}
-                    onError={(e) => {
-                      console.error(`Failed to load image: ${item.src}`);
-                      e.currentTarget.src = getAssetPath('/assets/fallback.jpg');
-                    }}
                   />
                 )}
               </div>
