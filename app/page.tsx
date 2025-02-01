@@ -195,17 +195,17 @@ const experienceData = [
 const aboutMeMedia = [
   {
     type: 'image' as const,
-    src: './assets/gallery/aboutme1.jpg',
+    src: '/assets/gallery/aboutme1.jpg',
     alt: "Graduating with a Diploma in Information Technology",
   },
   {
     type: 'image' as const,
-    src: './assets/gallery/aboutme2.jpg',
+    src: '/assets/gallery/aboutme2.jpg',
     alt: "Awards Night 2019",
   },
   {
     type: 'image' as const,
-    src: './assets/gallery/aboutme3.jpg',
+    src: '/assets/gallery/aboutme3.jpg',
     alt: "Promotion to 2nd Sergeant in the Singapore Armed Forces",
   },
 ]

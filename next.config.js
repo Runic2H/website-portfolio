@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['vercel.app'],
+    domains: ['runic2h-website.vercel.app/'],
     unoptimized: true,
     remotePatterns: [
       {
@@ -10,6 +10,7 @@ const nextConfig = {
       },
     ],
   },
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/' : '',
 }
 
 module.exports = nextConfig
