@@ -6,7 +6,6 @@ import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "./ui/button"
-import { getAssetPath } from "@/utils/assetPath"
 
 interface CarouselMedia {
   type: 'image' | 'video'

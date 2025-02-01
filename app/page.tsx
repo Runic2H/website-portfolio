@@ -16,205 +16,204 @@ import { motion, useScroll } from "framer-motion"
 import ContactForm from "../components/contact-form";
 
 
-// Project data
-const projects = [
-  {
-    title: "SlimeRush - Software Engineering Project 1",
-    description: "A 2D rogue-like shooter game developed using a DigiPen's in house game C engine, CProcessing.",
-    image: "/assets/projects/1.jpg",
-    media: [
-      {
-        type: 'image' as const,
-        src: "/assets/projects/SR.gif",
-        alt: "SlimeRush Gameplay"
-      },
-      {
-        type: 'image' as const,
-        src: "/assets/projects/1.jpg",
-        alt: "SlimeRush Screenshot"
-      },
-    ],
-    longDescription: "Project Lead and Level Programmer for a 2D rogue-like shooter. This was a group project where I was responsible for the gameplay design and programming. My first introduction to game development and game engines.",
-    technologies: ["C", "CProcessing Game Engine"],
-    contributions: [
-      "Built from scratch using C, using the CProcessing Game Engine ",
-      "Implemented main collision hitboxes between all game objects ",
-      "Implemented core gameplay features, such as character progression, gameplay loop ",
-      "Implemented core UI elements such as player and enemy health bars to improve game's design",
-    ],
-    tags: ["Games", "School Projects"],
-  },
-  {
-    title: "Project DUCK! - Software Engineering Project 2",
-    description: "A 2D adventure game built using DigiPen's in house game C++ engine, Alpha.",
-    image: "/assets/projects/2.jpg",
-    media: [
-      {
-        type: 'video' as const,
-        src: "/assets/projects/Project_Duck.mp4",
-        alt: "Project DUCK! 2 Minute Gameplay",
-        poster: "/assets/projects/2.jpg",
-      },
-    ],
-    longDescription: "Project Lead and Level Programmer for a top-down adventure video game built using DigiPen's in house game C++ engine, Alpha. Project DUCK! is a reaction-based adventure game where the player must find his way to the other side of the pond and fight back against the evil turtles.",
-    technologies: ["C++", "Alpha Game Engine", "FMOD"],
-    features: [
-      "A leveling system",
-      "Different enemies with unique abilities and scaling difficulty",
-      "Procedurally generated maze built from a 2D tilemap",
-      "A reaction-based dodge and combat mechanic",
-    ],
-    contributions: [
-      "Built from scratch using C++, using the Alpha Game Engine",
-      "Idealized and Implemented core game mechanic for the combat elements of the game ",
-      "QA Lead, rigorously tested and fixed bugs or reported them",
-    ],
-    tags: ["Games", "School Projects"],
-  },
-  {
-    title: "Exomata - Software Engineering Project 3",
-    description: "A 2.5D Hack and Slash game using a custom built C++ game engine, ExoEngine.",
-    image: "/assets/projects/5.jpg",
-    media: [
-      {
-        type: 'video' as const,
-        src: "/assets/projects/DnG.mp4",
-        alt: "Exomata Showcase",
-        poster: "/assets/projects/5.jpg",
-      },
-      {
-        type: 'image' as const,
-        src: "/assets/projects/5.jpg",
-        alt: "Exomata Screenshot"
-      },
-    ],
-    longDescription: "Technical Lead and Backend Developer for ExoEngine, a custom game engine for our 2D HacknSlash game, Exomata, built using C++ and OpenGL. Your Ship Crashes on an Alien Planet and you must fight your way back home.",
-    technologies: ["C++", "OpenGL", "IMGUI", "FMOD"],
-    features: [
-      "A custom built game engine",
-      "Different enemies types",
-      "A combat system with parry mechanics and hit stop for adding weight to attacks",
-    ],
-    contributions: [
-      "Designed and implemented the backend architecture for the engine, implemented using an Entity Component System (ECS) architecture pattern to create the game objects",
-      "Designed and implemented a Finite State Machine to handle all gameplay behaviours and did scripting for most ingame behaviours, including character movement and enemy AI",
-      "Handled project's version control using GitHub and was in charge of resolving merge conflicts",
-    ],
-    tags: ["Games", "School Projects"],
-  },
-  {
-    title: "Disinheritance - Software Engineering Project 4",
-    description: "A 3D story-based stealth horror game using a custom built C++ game engine, GAM300Engine.",
-    image: "/assets/projects/6.png",
-    media: [
-      {
-        type: 'video' as const,
-        src: "/assets/projects/Disinheritance.mp4",
-        alt: "Disinheritance Showcase",
-        poster: "/assets/projects/6.png",
-      },
-    ],
-    longDescription: "Technical Lead and Backend Developer for GAM300Engine, a custom 3D game engine for our story-based stealth horror game, built using C++ and Vulcan. A thief set out to reclaim his family's rightful inheritance, but soon discovers the horrors that lie within the mansion and his family's dark secrets. Will he be able to escape?",
-    technologies: ["C++", "Vulcan", "IMGUI" , "FMOD", ".NET", "C#"],
-    features: [
-      "A custom built 3D game engine",
-      "A lockpicking minigame with stealth mechanics",
-      "JUMPSCARES!",
-      "Immersive Sound Design with directional sfx and ambient noises",
-    ],
-    contributions: [
-      "Developed a Custom Scripting Language using .NET to allow game designers to work on the game using C#",
-      "Developed custom functions that emulate features on the Unity Game Engine for ease of use for gameplay designers",
-      "Developed custom scripts for Hot Reloading of game engine when altering game level",
-      "Handled merge conflicts and managed Git repository",
-    ],
-    tags: ["Games", "School Projects"],
-  },
-  {
-    title: "Fox Hunt - Personal Project",
-    description: "A 2D Hyper Casual Platformer built using PlayCanvas Game Engine.",
-    image: "/assets/projects/4.jpg",
-    media: [
-      {
-        type: 'image' as const,
-        src: "/assets/projects/4.jpg",
-        alt: "Fox Hunt Showcase",
-      },
-    ],
-    longDescription: "A personal project just for fun, a 2D Hyper Casual Platformer built using PlayCanvas Game Engine, using assets from the unity asset store.",
-    technologies: ["PlayCanvas", "JavaScript"],
-    features: [
-      "A simple and fun gameplay loop",
-      "Collect as many cherries as possible to gather points before the time runs out",
-      "Wall Jumping Mechanics for some added challenge and skill expression",
-    ],
-    tags: ["Games", "Personal Projects"],
-    liveUrl: "https://playcanv.as/p/NTxxXKUF/",
-  },
-  {
-    title: "My Portfolio Website - Personal Project",
-    description: "A portfolio website built using Next.js, Tailwind CSS, and Framer Motion.",
-    image: "/assets/gallery/bg.jpg",
-    media: [
-      {
-        type: 'image' as const,
-        src: "/assets/gallery/bg.jpg",
-        alt: "My Portfolio Website Showcase",
-      },
-    ],
-    longDescription: "A personal project just to showcase my projects and skills.",
-    technologies: ["Next.js", "Tailwind CSS", "Framer Motion"],
-    tags: ["Personal Projects"],
-    liveUrl: "runic2h-website.vercel.app",
-  },
-  // ... add more projects
-]
-
-// Experience data
-const experienceData = [
-  {
-    title: "Full Stack Intern",
-    company: "uParcel",
-    period: "2024 - Present",
-    description: "An 8 month Internship as a Full-Stack Developer tasked with designing and writing with Python on Django framework for uParcel's backend services, as well as JavaScript on Next.js Framework for uParcel's web application.",
-  },
-  {
-    title: "Technical Intern",
-    company: "TinyMOS",
-    period: "2019 - 2019",
-    description: "A 9 month Internship in a startup company that created the world's smallest astronomy camera as a cross platform mobile developer using Xamarin for their application, the Nano1Companion.",
-  },
-  {
-    title: "Technical Intern",
-    company: "Infinito Blockchain Labs",
-    period: "2018 - 2019",
-    description: "A 6 month internship at Infinity Blockchain Labs, developing frontend features for Infinito Wallet using React Native, a universal Crypto-Wallet.",
-  },
-];
-
-const aboutMeMedia = [
-  {
-    type: 'image' as const,
-    src: '/assets/gallery/aboutme1.jpg',
-    alt: "Graduating with a Diploma in Information Technology",
-  },
-  {
-    type: 'image' as const,
-    src: '/assets/gallery/aboutme2.jpg',
-    alt: "Awards Night 2019",
-  },
-  {
-    type: 'image' as const,
-    src: '/assets/gallery/aboutme3.jpg',
-    alt: "Promotion to 2nd Sergeant in the Singapore Armed Forces",
-  },
-]
-
 export default function Page() {
   const { scrollYProgress } = useScroll()
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null)
   const [isVisible, setIsVisible] = useState(true)
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null)
+    // Project data
+  const projects = [
+    {
+      title: "SlimeRush - Software Engineering Project 1",
+      description: "A 2D rogue-like shooter game developed using a DigiPen's in house game C engine, CProcessing.",
+      image: "/assets/projects/1.jpg",
+      media: [
+        {
+          type: 'image' as const,
+          src: "/assets/projects/SR.gif",
+          alt: "SlimeRush Gameplay"
+        },
+        {
+          type: 'image' as const,
+          src: "/assets/projects/1.jpg",
+          alt: "SlimeRush Screenshot"
+        },
+      ],
+      longDescription: "Project Lead and Level Programmer for a 2D rogue-like shooter. This was a group project where I was responsible for the gameplay design and programming. My first introduction to game development and game engines.",
+      technologies: ["C", "CProcessing Game Engine"],
+      contributions: [
+        "Built from scratch using C, using the CProcessing Game Engine ",
+        "Implemented main collision hitboxes between all game objects ",
+        "Implemented core gameplay features, such as character progression, gameplay loop ",
+        "Implemented core UI elements such as player and enemy health bars to improve game's design",
+      ],
+      tags: ["Games", "School Projects"],
+    },
+    {
+      title: "Project DUCK! - Software Engineering Project 2",
+      description: "A 2D adventure game built using DigiPen's in house game C++ engine, Alpha.",
+      image: "/assets/projects/2.jpg",
+      media: [
+        {
+          type: 'video' as const,
+          src: "/assets/projects/Project_Duck.mp4",
+          alt: "Project DUCK! 2 Minute Gameplay",
+          poster: "/assets/projects/2.jpg",
+        },
+      ],
+      longDescription: "Project Lead and Level Programmer for a top-down adventure video game built using DigiPen's in house game C++ engine, Alpha. Project DUCK! is a reaction-based adventure game where the player must find his way to the other side of the pond and fight back against the evil turtles.",
+      technologies: ["C++", "Alpha Game Engine", "FMOD"],
+      features: [
+        "A leveling system",
+        "Different enemies with unique abilities and scaling difficulty",
+        "Procedurally generated maze built from a 2D tilemap",
+        "A reaction-based dodge and combat mechanic",
+      ],
+      contributions: [
+        "Built from scratch using C++, using the Alpha Game Engine",
+        "Idealized and Implemented core game mechanic for the combat elements of the game ",
+        "QA Lead, rigorously tested and fixed bugs or reported them",
+      ],
+      tags: ["Games", "School Projects"],
+    },
+    {
+      title: "Exomata - Software Engineering Project 3",
+      description: "A 2.5D Hack and Slash game using a custom built C++ game engine, ExoEngine.",
+      image: "/assets/projects/5.jpg",
+      media: [
+        {
+          type: 'video' as const,
+          src: "/assets/projects/DnG.mp4",
+          alt: "Exomata Showcase",
+          poster: "/assets/projects/5.jpg",
+        },
+        {
+          type: 'image' as const,
+          src: "/assets/projects/5.jpg",
+          alt: "Exomata Screenshot"
+        },
+      ],
+      longDescription: "Technical Lead and Backend Developer for ExoEngine, a custom game engine for our 2D HacknSlash game, Exomata, built using C++ and OpenGL. Your Ship Crashes on an Alien Planet and you must fight your way back home.",
+      technologies: ["C++", "OpenGL", "IMGUI", "FMOD"],
+      features: [
+        "A custom built game engine",
+        "Different enemies types",
+        "A combat system with parry mechanics and hit stop for adding weight to attacks",
+      ],
+      contributions: [
+        "Designed and implemented the backend architecture for the engine, implemented using an Entity Component System (ECS) architecture pattern to create the game objects",
+        "Designed and implemented a Finite State Machine to handle all gameplay behaviours and did scripting for most ingame behaviours, including character movement and enemy AI",
+        "Handled project's version control using GitHub and was in charge of resolving merge conflicts",
+      ],
+      tags: ["Games", "School Projects"],
+    },
+    {
+      title: "Disinheritance - Software Engineering Project 4",
+      description: "A 3D story-based stealth horror game using a custom built C++ game engine, GAM300Engine.",
+      image: "/assets/projects/6.png",
+      media: [
+        {
+          type: 'video' as const,
+          src: "/assets/projects/Disinheritance.mp4",
+          alt: "Disinheritance Showcase",
+          poster: "/assets/projects/6.png",
+        },
+      ],
+      longDescription: "Technical Lead and Backend Developer for GAM300Engine, a custom 3D game engine for our story-based stealth horror game, built using C++ and Vulcan. A thief set out to reclaim his family's rightful inheritance, but soon discovers the horrors that lie within the mansion and his family's dark secrets. Will he be able to escape?",
+      technologies: ["C++", "Vulcan", "IMGUI" , "FMOD", ".NET", "C#"],
+      features: [
+        "A custom built 3D game engine",
+        "A lockpicking minigame with stealth mechanics",
+        "JUMPSCARES!",
+        "Immersive Sound Design with directional sfx and ambient noises",
+      ],
+      contributions: [
+        "Developed a Custom Scripting Language using .NET to allow game designers to work on the game using C#",
+        "Developed custom functions that emulate features on the Unity Game Engine for ease of use for gameplay designers",
+        "Developed custom scripts for Hot Reloading of game engine when altering game level",
+        "Handled merge conflicts and managed Git repository",
+      ],
+      tags: ["Games", "School Projects"],
+    },
+    {
+      title: "Fox Hunt - Personal Project",
+      description: "A 2D Hyper Casual Platformer built using PlayCanvas Game Engine.",
+      image: "/assets/projects/4.jpg",
+      media: [
+        {
+          type: 'image' as const,
+          src: "/assets/projects/4.jpg",
+          alt: "Fox Hunt Showcase",
+        },
+      ],
+      longDescription: "A personal project just for fun, a 2D Hyper Casual Platformer built using PlayCanvas Game Engine, using assets from the unity asset store.",
+      technologies: ["PlayCanvas", "JavaScript"],
+      features: [
+        "A simple and fun gameplay loop",
+        "Collect as many cherries as possible to gather points before the time runs out",
+        "Wall Jumping Mechanics for some added challenge and skill expression",
+      ],
+      tags: ["Games", "Personal Projects"],
+      liveUrl: "https://playcanv.as/p/NTxxXKUF/",
+    },
+    {
+      title: "My Portfolio Website - Personal Project",
+      description: "A portfolio website built using Next.js, Tailwind CSS, and Framer Motion.",
+      image: "/assets/gallery/bg.jpg",
+      media: [
+        {
+          type: 'image' as const,
+          src: "/assets/gallery/bg.jpg",
+          alt: "My Portfolio Website Showcase",
+        },
+      ],
+      longDescription: "A personal project just to showcase my projects and skills.",
+      technologies: ["Next.js", "Tailwind CSS", "Framer Motion"],
+      tags: ["Personal Projects"],
+      liveUrl: "runic2h-website.vercel.app",
+    },
+    // ... add more projects
+  ]
+
+  // Experience data
+  const experienceData = [
+    {
+      title: "Full Stack Intern",
+      company: "uParcel",
+      period: "2024 - Present",
+      description: "An 8 month Internship as a Full-Stack Developer tasked with designing and writing with Python on Django framework for uParcel's backend services, as well as JavaScript on Next.js Framework for uParcel's web application.",
+    },
+    {
+      title: "Technical Intern",
+      company: "TinyMOS",
+      period: "2019 - 2019",
+      description: "A 9 month Internship in a startup company that created the world's smallest astronomy camera as a cross platform mobile developer using Xamarin for their application, the Nano1Companion.",
+    },
+    {
+      title: "Technical Intern",
+      company: "Infinito Blockchain Labs",
+      period: "2018 - 2019",
+      description: "A 6 month internship at Infinity Blockchain Labs, developing frontend features for Infinito Wallet using React Native, a universal Crypto-Wallet.",
+    },
+  ];
+
+  const aboutMeMedia = [
+    {
+      type: 'image' as const,
+      src: '/assets/gallery/aboutme1.jpg',
+      alt: "Graduating with a Diploma in Information Technology",
+    },
+    {
+      type: 'image' as const,
+      src: '/assets/gallery/aboutme2.jpg',
+      alt: "Awards Night 2019",
+    },
+    {
+      type: 'image' as const,
+      src: '/assets/gallery/aboutme3.jpg',
+      alt: "Promotion to 2nd Sergeant in the Singapore Armed Forces",
+    },
+  ]
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (latest) => {

@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://runic2h.github.io'),
+  metadataBase: new URL('https://runic2h-website.vercel.app'),
   title: "Elton Teo | Portfolio",
   description: "Personal portfolio of Elton Teo, showcasing skills and projects in frontend development and software engineering.",
   icons: {
