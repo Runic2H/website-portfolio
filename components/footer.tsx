@@ -11,8 +11,6 @@ const Footer = () => {
             <Link href="/" className="font-medium underline underline-offset-4">
              Elton Teo
             </Link>
-            <span className="mx-2">|</span>
-            Hosted on Vercel
           </p>
         </div>
         <div className="flex items-center space-x-4">
