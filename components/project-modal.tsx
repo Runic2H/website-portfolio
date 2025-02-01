@@ -66,7 +66,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                 transition={{ duration: 0.2 }}
               >
                 {projectMedia ? (
-                  <div className="relative w-full h-full flex items-center justify-center">
+                  <div className="relative" style={{ isolation: 'isolate' }}>
                     <ImageCarousel media={projectMedia} autoplay={false} />
                   </div>
                 ) : (
@@ -74,7 +74,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                     src={project.image}
                     alt={project.title}
                     fill
-                    className="w-full h-full object-cover"
+                    className="object-cover"
                   />
                 )}
               </motion.div>
