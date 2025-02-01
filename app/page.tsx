@@ -83,7 +83,7 @@ export default function Page() {
       media: [
         {
           type: 'video' as const,
-          src: "/assets/projects/DnG.mp4",
+          src: "/assets/projects/DNG.mp4",
           alt: "Exomata Showcase",
           poster: "/assets/projects/5.jpg",
         },
