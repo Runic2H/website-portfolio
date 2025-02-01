@@ -46,6 +46,7 @@ export function ImageCarousel({ media, autoplay = false }: ImageCarouselProps) {
             controls
             playing={autoplay}
             playsinline
+            volume={0.2}
             light={currentMedia.poster}
             config={{
               file: {

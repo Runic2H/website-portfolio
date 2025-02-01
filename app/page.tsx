@@ -12,6 +12,7 @@ import { ExternalLink } from "lucide-react"
 import confetti from 'canvas-confetti';
 import { motion, useScroll, useReducedMotion } from "framer-motion"
 import dynamic from 'next/dynamic'
+import { Badge } from "@/components/ui/badge"
 
 // Dynamically import heavy components
 const ContactForm = dynamic(() => import('@/components/contact-form'), {
@@ -332,20 +333,13 @@ export default function Page() {
                       phrases={[
                         "Welcome to my Portfolio! :)",
                         "I am Elton Teo",
-                        "I like Learning",
-                        "I know React... a little bit",
-                        "I know Python... a little bit",
-                        "I know C++... a little bit",
-                        "I know Unity... a little bit",
-                        "I know Unreal... a little bit",
-                        "I know Godot... a little bit",
-                        "A Creator",
-                        "A Developer",
-                        "A Problem Solver",
-                        "A Game Developer ",
-                        "A Chill Guy :D",
+                        "I Like Learning",
+                        "I Like To Make Games",
+                        "I Like To Code",
+                        "I Like To Solve Problems",
+                        "I Like To Test New Ideas",
                       ]} 
-                      name=""
+                      name="Let's Get Creating!"
                     />
                     <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
                       Have a look around!
@@ -531,17 +525,13 @@ export default function Page() {
                       </div>
                       <h3 className="text-xl font-bold mb-2 text-card-foreground">{project.title}</h3>
                       <p className="text-muted-foreground mb-4">{project.description}</p>
-                      <Button 
-                        variant="outline" 
-                        className="w-full"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          setSelectedProject(project)
-                        }}
-                      >
-                        View Details
-                        <ExternalLink className="ml-2 h-4 w-4" />
-                      </Button>
+                      <div className="flex flex-wrap gap-2">
+                        {project.technologies.map((tech, techIndex) => (
+                          <Badge key={techIndex} variant="secondary" className="text-xs">
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
                     </CardContent>
                   </Card>
                 </motion.div>
