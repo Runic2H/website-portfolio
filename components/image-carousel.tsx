@@ -32,7 +32,7 @@ export function ImageCarousel({
       skipSnaps: false,
       dragFree: false,
     },
-    autoplay ? [
+    (autoplay && media.length > 1) ? [
       Autoplay({
         delay: autoplayDelay,
         stopOnInteraction: true,
@@ -128,51 +128,55 @@ export function ImageCarousel({
         </div>
       </div>
 
-      {/* Navigation Buttons - Add opacity transition */}
-      <div className={`absolute inset-0 flex items-center justify-between p-4 pointer-events-none transition-opacity duration-300 ${
-        isHovered ? 'opacity-100' : 'opacity-0'
-      }`}>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 rounded-full bg-background/80 backdrop-blur-sm pointer-events-auto"
-          onClick={scrollPrev}
-          disabled={!prevBtnEnabled}
-        >
-          <ChevronLeft className="h-4 w-4" />
-          <span className="sr-only">Previous slide</span>
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 rounded-full bg-background/80 backdrop-blur-sm pointer-events-auto"
-          onClick={scrollNext}
-          disabled={!nextBtnEnabled}
-        >
-          <ChevronRight className="h-4 w-4" />
-          <span className="sr-only">Next slide</span>
-        </Button>
-      </div>
-
-      {/* Dots - Add opacity transition */}
-      <div className={`absolute bottom-4 left-0 right-0 pointer-events-none transition-opacity duration-300 ${
-        isHovered ? 'opacity-100' : 'opacity-0'
-      }`}>
-        <div className="flex justify-center gap-2">
-          {media.map((_, index) => (
-            <button
-              key={index}
-              className={`h-2 w-2 rounded-full transition-all pointer-events-auto ${
-                index === selectedIndex
-                  ? "bg-primary w-4"
-                  : "bg-primary/50"
-              }`}
-              onClick={() => emblaApi?.scrollTo(index)}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
+      {/* Only show navigation buttons if there's more than one item */}
+      {media.length > 1 && (
+        <div className={`absolute inset-0 flex items-center justify-between p-4 pointer-events-none transition-opacity duration-300 ${
+          isHovered ? 'opacity-100' : 'opacity-0'
+        }`}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 rounded-full bg-background/80 backdrop-blur-sm pointer-events-auto"
+            onClick={scrollPrev}
+            disabled={!prevBtnEnabled}
+          >
+            <ChevronLeft className="h-4 w-4" />
+            <span className="sr-only">Previous slide</span>
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 rounded-full bg-background/80 backdrop-blur-sm pointer-events-auto"
+            onClick={scrollNext}
+            disabled={!nextBtnEnabled}
+          >
+            <ChevronRight className="h-4 w-4" />
+            <span className="sr-only">Next slide</span>
+          </Button>
         </div>
-      </div>
+      )}
+
+      {/* Only show dots if there's more than one item */}
+      {media.length > 1 && (
+        <div className={`absolute bottom-4 left-0 right-0 pointer-events-none transition-opacity duration-300 ${
+          isHovered ? 'opacity-100' : 'opacity-0'
+        }`}>
+          <div className="flex justify-center gap-2">
+            {media.map((_, index) => (
+              <button
+                key={index}
+                className={`h-2 w-2 rounded-full transition-all pointer-events-auto ${
+                  index === selectedIndex
+                    ? "bg-primary w-4"
+                    : "bg-primary/50"
+                }`}
+                onClick={() => emblaApi?.scrollTo(index)}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 } 

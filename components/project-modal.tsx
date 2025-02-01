@@ -66,7 +66,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                 transition={{ duration: 0.2 }}
               >
                 {projectMedia ? (
-                  <div className="relative" style={{ isolation: 'isolate' }}>
+                  <div className="relative w-full h-full flex items-center justify-center">
                     <ImageCarousel media={projectMedia} autoplay={false} />
                   </div>
                 ) : (
@@ -74,14 +74,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                     src={project.image}
                     alt={project.title}
                     fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    priority={true}
-                    className="object-cover"
-                    onError={(e) => {
-                      console.error(`Failed to load image: ${project.image}`);
-                      // Optionally set a fallback image
-                      e.currentTarget.src = '/assets/fallback-image.jpg';
-                    }}
+                    className="w-full h-full object-cover"
                   />
                 )}
               </motion.div>

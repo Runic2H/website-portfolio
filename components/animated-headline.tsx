@@ -19,7 +19,7 @@ export function AnimatedHeadline({ phrases, name }: AnimatedHeadlineProps) {
       if (displayText.length < currentPhrase.length) {
         timeout = setTimeout(() => {
           setDisplayText(currentPhrase.slice(0, displayText.length + 1))
-        }, 40)
+        }, 30)
       } else {
         timeout = setTimeout(() => {
           setIsTyping(false)
@@ -29,7 +29,7 @@ export function AnimatedHeadline({ phrases, name }: AnimatedHeadlineProps) {
       if (displayText.length > 0) {
         timeout = setTimeout(() => {
           setDisplayText(displayText.slice(0, -1))
-        }, 40)
+        }, 30)
       } else {
         setCurrentPhraseIndex((prev) => (prev === phrases.length - 1 ? 0 : prev + 1))
         setIsTyping(true)
@@ -41,7 +41,6 @@ export function AnimatedHeadline({ phrases, name }: AnimatedHeadlineProps) {
 
   return (
     <div className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-      <span>I am </span>
       <span className="text-primary">{displayText}</span>
       <span className="animate-blink">|</span>
       {currentPhraseIndex === phrases.length - 1 && displayText === phrases[currentPhraseIndex] && (

@@ -8,19 +8,26 @@ import Link from "next/link"
 import { ModeToggle } from "@/components/mode-toggle"
 import { ImageCarousel } from "@/components/image-carousel"
 import { AnimatedHeadline } from "@/components/animated-headline"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { ProjectModal } from "@/components/project-modal"
 import { ExternalLink } from "lucide-react"
 import confetti from 'canvas-confetti';
-import { motion, useScroll } from "framer-motion"
-import ContactForm from "../components/contact-form";
+import { motion, useScroll, useReducedMotion } from "framer-motion"
+import dynamic from 'next/dynamic'
+import { useVirtualizer } from '@tanstack/react-virtual'
 
+// Dynamically import heavy components
+const ContactForm = dynamic(() => import('@/components/contact-form'), {
+  loading: () => <div>Loading...</div>
+})
 
 export default function Page() {
   const { scrollYProgress } = useScroll()
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null)
   const [isVisible, setIsVisible] = useState(true)
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null)
+  const prefersReducedMotion = useReducedMotion()
+  const [isLoading, setIsLoading] = useState(true)
     // Project data
   const projects = [
     {
@@ -31,12 +38,8 @@ export default function Page() {
         {
           type: 'video' as const,
           src: "/assets/projects/SR.mp4",
-          alt: "SlimeRush Gameplay"
-        },
-        {
-          type: 'image' as const,
-          src: "/assets/projects/1.jpg",
-          alt: "SlimeRush Screenshot"
+          alt: "SlimeRush Gameplay",
+          poster: "/assets/projects/1.jpg",
         },
       ],
       longDescription: "Project Lead and Level Programmer for a 2D rogue-like shooter. This was a group project where I was responsible for the gameplay design and programming. My first introduction to game development and game engines.",
@@ -86,11 +89,6 @@ export default function Page() {
           src: "/assets/projects/Exomata.mp4",
           alt: "Exomata Showcase",
           poster: "/assets/projects/5.jpg",
-        },
-        {
-          type: 'image' as const,
-          src: "/assets/projects/5.jpg",
-          alt: "Exomata Screenshot"
         },
       ],
       longDescription: "Technical Lead and Backend Developer for ExoEngine, a custom game engine for our 2D HacknSlash game, Exomata, built using C++ and OpenGL. Your Ship Crashes on an Alien Planet and you must fight your way back home.",
@@ -223,6 +221,16 @@ export default function Page() {
     return () => unsubscribe()
   }, [scrollYProgress])
 
+  useEffect(() => {
+    // Check if critical resources are loaded
+    Promise.all([
+      // Add your critical resource loading checks here
+      document.fonts.ready,
+    ]).then(() => {
+      setIsLoading(false)
+    })
+  }, [])
+
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const targetId = e.currentTarget.getAttribute('href')?.slice(1);
@@ -292,6 +300,48 @@ export default function Page() {
     }, 100); // Small delay to ensure confetti is visible
   };
 
+  // Add image loading priority optimization
+  const getImagePriority = (index: number) => {
+    // Only prioritize first 3 visible projects
+    return index < 3
+  }
+
+  const parentRef = useRef<HTMLDivElement>(null)
+  
+  const rowVirtualizer = useVirtualizer({
+    count: filteredProjects.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 450, // Adjust based on your card height
+    overscan: 3,
+    horizontal: false,
+    lanes: 3, // Number of columns in the grid
+  })
+
+  // Optimize animation configs
+  const fadeInAnimation = {
+    initial: { opacity: 0, y: prefersReducedMotion ? 0 : 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { margin: "-100px", once: true },
+    transition: { duration: 0.5 }
+  }
+
+  const cardHoverAnimation = prefersReducedMotion 
+    ? {}
+    : {
+        whileHover: { 
+          scale: 1.02,
+          transition: { type: "tween", duration: 0.2 }
+        }
+      }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen gradient-background">
       <main className="flex-1">
@@ -311,15 +361,25 @@ export default function Page() {
                   <div className="space-y-2">
                     <AnimatedHeadline 
                       phrases={[
-                        "a Problem Solver",
-                        "a Developer",
-                        "a Creator",
-                        "Elton Teo"
+                        "Welcome to my Portfolio! :)",
+                        "I am Elton Teo",
+                        "I like Learning",
+                        "I know React... a little bit",
+                        "I know Python... a little bit",
+                        "I know C++... a little bit",
+                        "I know Unity... a little bit",
+                        "I know Unreal... a little bit",
+                        "I know Godot... a little bit",
+                        "A Creator",
+                        "A Developer",
+                        "A Problem Solver",
+                        "A Game Developer ",
+                        "A Chill Guy :D",
                       ]} 
                       name=""
                     />
                     <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                      Welcome to my portfolio!
+                      Have a look around!
                     </p>
                   </div>
                   <div className="space-x-4">
@@ -395,8 +455,7 @@ export default function Page() {
               {/* Text Content with hover animation */}
               <motion.div 
                 className="space-y-6"
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 300 }}
+                {...cardHoverAnimation}
               >
                 <motion.h2 
                   className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
@@ -469,53 +528,79 @@ export default function Page() {
               ))}
             </div>
 
-            {/* Projects Grid - update to use filteredProjects */}
-            <div className="max-w-4xl mx-auto grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {filteredProjects.map((project, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ margin: "-100px" }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  whileHover={{ 
-                    scale: 1.05,
-                    rotateY: 5,
-                    boxShadow: "0px 5px 15px rgba(0,0,0,0.1)"
-                  }}
-                >
-                  <Card 
-                    className="group cursor-pointer transition-all hover:shadow-lg gradient-card"
-                    onClick={() => setSelectedProject(project)}
-                  >
-                    <CardContent className="p-4">
-                      <div className="relative aspect-video overflow-hidden rounded-lg mb-4">
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          priority={index === 0}
-                          className="object-cover transition-transform group-hover:scale-105"
-                        />
-                      </div>
-                      <h3 className="text-xl font-bold mb-2 text-card-foreground">{project.title}</h3>
-                      <p className="text-muted-foreground mb-4">{project.description}</p>
-                      <Button 
-                        variant="outline" 
-                        className="w-full"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          setSelectedProject(project)
+            {/* Projects Grid with Virtualization */}
+            <div 
+              ref={parentRef}
+              className="max-w-4xl mx-auto overflow-auto"
+              style={{ height: 'calc(100vh - 200px)' }} // Adjust height as needed
+            >
+              <div
+                style={{
+                  height: `${rowVirtualizer.getTotalSize()}px`,
+                  width: '100%',
+                  position: 'relative',
+                }}
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+                    const project = filteredProjects[virtualRow.index]
+                    return (
+                      <div
+                        key={virtualRow.index}
+                        style={{
+                          position: 'absolute',
+                          top: virtualRow.start,
+                          left: `${(virtualRow.index % 3) * 33.33}%`, // Adjust for grid columns
+                          width: '33.33%', // Adjust width for grid layout
+                          height: `${virtualRow.size}px`,
+                          padding: '0.5rem',
                         }}
                       >
-                        View Details
-                        <ExternalLink className="ml-2 h-4 w-4" />
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ margin: "-100px" }}
+                          transition={{ duration: 0.6, delay: virtualRow.index * 0.1 }}
+                          {...cardHoverAnimation}
+                          className="h-full" // Ensure full height
+                        >
+                          <Card 
+                            className="group cursor-pointer transition-all hover:shadow-lg gradient-card h-full"
+                            onClick={() => setSelectedProject(project)}
+                          >
+                            <CardContent className="p-4">
+                              <div className="relative aspect-video overflow-hidden rounded-lg mb-4">
+                                <Image
+                                  src={project.image}
+                                  alt={project.title}
+                                  fill
+                                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                  priority={getImagePriority(virtualRow.index)}
+                                  loading={getImagePriority(virtualRow.index) ? "eager" : "lazy"}
+                                  className="object-cover transition-transform group-hover:scale-105"
+                                />
+                              </div>
+                              <h3 className="text-xl font-bold mb-2 text-card-foreground">{project.title}</h3>
+                              <p className="text-muted-foreground mb-4">{project.description}</p>
+                              <Button 
+                                variant="outline" 
+                                className="w-full"
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  setSelectedProject(project)
+                                }}
+                              >
+                                View Details
+                                <ExternalLink className="ml-2 h-4 w-4" />
+                              </Button>
+                            </CardContent>
+                          </Card>
+                        </motion.div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </motion.section>
