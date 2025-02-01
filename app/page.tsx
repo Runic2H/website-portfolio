@@ -339,7 +339,7 @@ export default function Page() {
                         "I Like To Solve Problems",
                         "I Like To Test New Ideas",
                       ]} 
-                      name="Let's Get Creating!"
+                      name="So Let's Get Creating!"
                     />
                     <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
                       Have a look around!
