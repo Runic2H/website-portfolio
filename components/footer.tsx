@@ -1,5 +1,6 @@
 import { Space } from "lucide-react"
 import Link from "next/link"
+import { Github, Linkedin } from "lucide-react"
 
 const Footer = () => {
   return (
@@ -14,11 +15,21 @@ const Footer = () => {
           </p>
         </div>
         <div className="flex items-center space-x-4">
-          <Link href="https://github.com/runic2h" target="_blank" rel="noreferrer">
-            GitHub
+          <Link 
+            href="https://github.com/runic2h" 
+            target="_blank" 
+            rel="noreferrer"
+            className="hover:text-primary transition-colors"
+          >
+            <Github className="h-5 w-5" />
           </Link>
-          <Link href="https://linkedin.com/in/eltonteo99" target="_blank" rel="noreferrer">
-            LinkedIn
+          <Link 
+            href="https://linkedin.com/in/eltonteo99" 
+            target="_blank" 
+            rel="noreferrer"
+            className="hover:text-primary transition-colors"
+          >
+            <Linkedin className="h-5 w-5" />
           </Link>
         </div>
       </div>

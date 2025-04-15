@@ -6,13 +6,13 @@ import Image from "next/image"
 import Link from "next/link"
 import { ImageCarousel } from "@/components/image-carousel"
 import { AnimatedHeadline } from "@/components/animated-headline"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { ProjectModal } from "@/components/project-modal"
-import { ExternalLink } from "lucide-react"
 import confetti from 'canvas-confetti';
 import { motion, useScroll, useReducedMotion } from "framer-motion"
 import dynamic from 'next/dynamic'
 import { Badge } from "@/components/ui/badge"
+import type { LocomotiveScrollInstance } from 'locomotive-scroll';
 
 // Dynamically import heavy components
 const ContactForm = dynamic(() => import('@/components/contact-form'), {
@@ -20,12 +20,14 @@ const ContactForm = dynamic(() => import('@/components/contact-form'), {
 })
 
 export default function Page() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll()
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null)
   const [isVisible, setIsVisible] = useState(true)
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const shouldReduceMotion = useReducedMotion()
+  const [locomotiveScroll, setLocomotiveScroll] = useState<LocomotiveScrollInstance | null>(null);
     // Project data
   const projects = [
     {
@@ -176,19 +178,19 @@ export default function Page() {
     {
       title: "Full Stack Intern",
       company: "uParcel",
-      period: "2024 - Present",
+      period: "Sep 2024 - Apr 2025",
       description: "An 8 month Internship as a Full-Stack Developer tasked with designing and writing with Python on Django framework for uParcel's backend services, as well as JavaScript on Next.js Framework for uParcel's web application.",
     },
     {
       title: "Technical Intern",
       company: "TinyMOS",
-      period: "2019 - 2019",
+      period: "Feb 2019 - Oct 2019",
       description: "A 9 month Internship in a startup company that created the world's smallest astronomy camera as a cross platform mobile developer using Xamarin for their application, the Nano1Companion.",
     },
     {
       title: "Technical Intern",
       company: "Infinito Blockchain Labs",
-      period: "2018 - 2019",
+      period: "Sep 2018 - Feb 2019",
       description: "A 6 month internship at Infinity Blockchain Labs, developing frontend features for Infinito Wallet using React Native, a universal Crypto-Wallet.",
     },
   ];
@@ -210,6 +212,36 @@ export default function Page() {
       alt: "Promotion to 2nd Sergeant in the Singapore Armed Forces",
     },
   ]
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    // Dynamically import Locomotive Scroll
+    import('locomotive-scroll').then((module) => {
+      const LocomotiveScroll = module.default;
+      const scroll = new LocomotiveScroll({
+        el: containerRef.current!,
+        smooth: true,
+        multiplier: 1,
+        class: 'is-revealed',
+        lerp: 0.05,
+        smartphone: {
+          smooth: true,
+          breakpoint: 767
+        },
+        tablet: {
+          smooth: true,
+          breakpoint: 1024
+        }
+      });
+
+      setLocomotiveScroll(scroll);
+
+      return () => {
+        scroll.destroy();
+      };
+    });
+  }, []);
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (latest) => {
@@ -236,22 +268,6 @@ export default function Page() {
       </div>
     )
   }
-
-  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    const targetId = e.currentTarget.getAttribute('href')?.slice(1);
-    const targetElement = document.getElementById(targetId || '');
-    
-    if (targetElement) {
-      const windowHeight = window.innerHeight;
-      const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
-      // Scroll to position the target element in the middle of the viewport
-      window.scrollTo({
-        top: targetPosition - (windowHeight / 4),
-        behavior: 'smooth'
-      });
-    }
-  };
 
   const handleConfetti = () => {
     // First burst from the left
@@ -313,10 +329,11 @@ export default function Page() {
   }
 
   return (
-    <div className="min-h-screen gradient-background">
-      <main className="flex-1">
+    <div ref={containerRef} data-scroll-container className="min-h-screen gradient-background">
+      <main className="flex-1" data-scroll-section>
         {/* Hero Section */}
         <motion.section 
+          data-scroll-section
           initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: shouldReduceMotion ? 0.4 : 0.8 }}
@@ -361,51 +378,12 @@ export default function Page() {
                 </div>
               </div>
             </div>
-
-            {/* Scroll Indicator with visibility animation */}
-            <motion.div 
-              className="flex justify-center pb-16"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: isVisible ? 1 : 0 }}
-              transition={{ duration: shouldReduceMotion ? 0.2 : 0.3 }}
-            >
-              <motion.div 
-                className="cursor-pointer"
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : -10 }}
-                animate={{ opacity: isVisible ? 1 : 0, y: 0 }}
-                transition={{ 
-                  duration: shouldReduceMotion ? 0.5 : 1,
-                  repeat: (isVisible && !shouldReduceMotion) ? Infinity : 0,
-                  repeatType: "reverse"
-                }}
-              >
-                <Link 
-                  href="#about" 
-                  onClick={handleSmoothScroll}
-                >
-                  <div className="flex flex-col items-center space-y-2">
-                    <span className="text-sm text-muted-foreground">Scroll Down</span>
-                    <div className="w-8 h-8 rounded-full border-2 border-muted-foreground flex items-center justify-center">
-                      <motion.div
-                        className="w-1 h-3 bg-muted-foreground rounded-full"
-                        initial={{ opacity: 0, y: -2 }}
-                        animate={{ opacity: isVisible ? 1 : 0, y: 2 }}
-                        transition={{
-                          duration: 1.5,
-                          repeat: isVisible ? Infinity : 0,
-                          repeatType: "reverse"
-                        }}
-                      />
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            </motion.div>
           </div>
         </motion.section>
 
         {/* About Section */}
         <motion.section 
+          data-scroll-section
           initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ margin: "-100px" }}
@@ -453,6 +431,7 @@ export default function Page() {
 
         {/* Projects Section */}
         <motion.section 
+          data-scroll-section
           initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ margin: "-100px" }}
@@ -542,6 +521,7 @@ export default function Page() {
 
         {/* Experience Section */}
         <motion.section 
+          data-scroll-section
           initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ margin: "-100px" }}
@@ -615,6 +595,7 @@ export default function Page() {
 
         {/* Contact Section */}
         <motion.section 
+          data-scroll-section
           initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ margin: "-100px" }}
