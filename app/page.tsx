@@ -29,7 +29,10 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(true)
   const shouldReduceMotion = useReducedMotion()
   const [locomotiveScroll, setLocomotiveScroll] = useState<LocomotiveScrollInstance | null>(null);
-    // Project data
+  const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+  // Project data
   const projects = [
     {
       title: "SlimeRush - Software Engineering Project 1",
@@ -262,6 +265,11 @@ export default function Page() {
     })
   }, [])
 
+  useEffect(() => {
+    // Initialize video refs array
+    videoRefs.current = videoRefs.current.slice(0, projects.length);
+  }, [projects.length]);
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -486,6 +494,21 @@ export default function Page() {
                     rotateY: 5,
                     boxShadow: "0px 5px 15px rgba(0,0,0,0.1)"
                   }}
+                  onMouseEnter={() => {
+                    setHoveredProject(index);
+                    if (videoRefs.current[index]) {
+                      videoRefs.current[index]?.play();
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    setHoveredProject(null);
+                    if (videoRefs.current[index]) {
+                      videoRefs.current[index]?.pause();
+                      videoRefs.current[index]!.currentTime = 0;
+                      // Force poster to show by loading it again
+                      videoRefs.current[index]!.load();
+                    }
+                  }}
                 >
                   <Card 
                     className="group cursor-pointer transition-all hover:shadow-lg gradient-card"
@@ -493,15 +516,28 @@ export default function Page() {
                   >
                     <CardContent className="p-4">
                       <div className="relative aspect-video overflow-hidden rounded-lg mb-4">
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          priority={getImagePriority(index)}
-                          loading={getImagePriority(index) ? "eager" : "lazy"}
-                          className="object-cover transition-transform group-hover:scale-105"
-                        />
+                        {project.media?.[0]?.type === 'video' ? (
+                          <video
+                            ref={el => { videoRefs.current[index] = el; }}
+                            src={project.media[0].src}
+                            poster={project.media[0].poster}
+                            className="w-full h-full object-cover"
+                            muted
+                            playsInline
+                            loop
+                            preload="metadata"
+                          />
+                        ) : (
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            priority={getImagePriority(index)}
+                            loading={getImagePriority(index) ? "eager" : "lazy"}
+                            className="object-cover transition-transform group-hover:scale-105"
+                          />
+                        )}
                       </div>
                       <h3 className="text-xl font-bold mb-2 text-card-foreground">{project.title}</h3>
                       <p className="text-muted-foreground mb-4">{project.description}</p>
