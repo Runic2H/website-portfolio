@@ -13,6 +13,7 @@ import { motion, useScroll, useReducedMotion } from "framer-motion"
 import dynamic from 'next/dynamic'
 import { Badge } from "@/components/ui/badge"
 import type { LocomotiveScrollInstance } from 'locomotive-scroll';
+import { MagneticButton } from "@/components/ui/magnetic-button"
 
 // Dynamically import heavy components
 const ContactForm = dynamic(() => import('@/components/contact-form'), {
@@ -362,18 +363,18 @@ export default function Page() {
                       Have a look around!
                     </p>
                   </div>
-                  <div className="space-x-4">
-                    <Button 
+                  <div className="flex items-center justify-center space-x-4">
+                    <MagneticButton 
                       onClick={scrollToContact}
                       className="relative z-20"
                     >
                       Contact Me
-                    </Button>
-                    <Button variant="outline" asChild>
+                    </MagneticButton>
+                    <MagneticButton variant="outline" asChild>
                       <Link href="/assets/resume/elton-teo-resume.pdf" target="_blank">
                         Download Resume
                       </Link>
-                    </Button>
+                    </MagneticButton>
                   </div>
                 </div>
               </div>
@@ -452,22 +453,22 @@ export default function Page() {
 
             {/* Filter Buttons */}
             <div className="flex flex-wrap gap-2 justify-center mb-8">
-              <Button
+              <MagneticButton
                 variant={selectedFilter === null ? "default" : "outline"}
                 onClick={() => setSelectedFilter(null)}
                 className="rounded-full"
               >
                 All
-              </Button>
+              </MagneticButton>
               {allTags.map((tag) => (
-                <Button
+                <MagneticButton
                   key={tag}
                   variant={selectedFilter === tag ? "default" : "outline"}
                   onClick={() => setSelectedFilter(tag)}
                   className="rounded-full"
                 >
                   {tag}
-                </Button>
+                </MagneticButton>
               ))}
             </div>
 

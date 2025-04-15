@@ -1,6 +1,8 @@
+'use client'
 import { Space } from "lucide-react"
 import Link from "next/link"
 import { Github, Linkedin } from "lucide-react"
+import { MagneticButton } from "./ui/magnetic-button"
 
 const Footer = () => {
   return (
@@ -15,22 +17,34 @@ const Footer = () => {
           </p>
         </div>
         <div className="flex items-center space-x-4">
-          <Link 
-            href="https://github.com/runic2h" 
-            target="_blank" 
-            rel="noreferrer"
-            className="hover:text-primary transition-colors"
+          <MagneticButton 
+            variant="ghost"
+            size="icon"
+            asChild
           >
-            <Github className="h-5 w-5" />
-          </Link>
-          <Link 
-            href="https://linkedin.com/in/eltonteo99" 
-            target="_blank" 
-            rel="noreferrer"
-            className="hover:text-primary transition-colors"
+            <Link 
+              href="https://github.com/runic2h" 
+              target="_blank" 
+              rel="noreferrer"
+              className="hover:text-primary transition-colors"
+            >
+              <Github className="h-5 w-5" />
+            </Link>
+          </MagneticButton>
+          <MagneticButton 
+            variant="ghost"
+            size="icon"
+            asChild
           >
-            <Linkedin className="h-5 w-5" />
-          </Link>
+            <Link 
+              href="https://linkedin.com/in/eltonteo99" 
+              target="_blank" 
+              rel="noreferrer"
+              className="hover:text-primary transition-colors"
+            >
+              <Linkedin className="h-5 w-5" />
+            </Link>
+          </MagneticButton>
         </div>
       </div>
     </footer>
