@@ -30,7 +30,12 @@ export function MagneticButton({ children, ...props }: MagneticButtonProps) {
       onMouseMove={handleMouse}
       onMouseLeave={reset}
       animate={{ x, y }}
-      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 2.0 }}
+      transition={{ 
+        type: "spring", 
+        stiffness: 100,
+        damping: 25,
+        mass: 0.5
+      }}
     >
       <Button ref={ref} {...props}>
         {children}

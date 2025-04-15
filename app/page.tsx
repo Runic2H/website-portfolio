@@ -371,7 +371,7 @@ export default function Page() {
                       Contact Me
                     </MagneticButton>
                     <MagneticButton variant="outline" asChild>
-                      <Link href="/assets/resume/elton-teo-resume.pdf" target="_blank">
+                      <Link href="/assets/resume/Elton_Teo_Resume.pdf" target="_blank">
                         Download Resume
                       </Link>
                     </MagneticButton>
@@ -458,7 +458,7 @@ export default function Page() {
                 onClick={() => setSelectedFilter(null)}
                 className="rounded-full"
               >
-                All
+                All Projects
               </MagneticButton>
               {allTags.map((tag) => (
                 <MagneticButton
