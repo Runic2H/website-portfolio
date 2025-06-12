@@ -256,27 +256,10 @@ export default function Page() {
   }, [scrollYProgress])
 
   useEffect(() => {
-    // Check if critical resources are loaded
-    Promise.all([
-      // Add your critical resource loading checks here
-      document.fonts.ready,
-    ]).then(() => {
-      setIsLoading(false)
-    })
-  }, [])
-
-  useEffect(() => {
     // Initialize video refs array
     videoRefs.current = videoRefs.current.slice(0, projects.length);
   }, [projects.length]);
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
-      </div>
-    )
-  }
 
   const handleConfetti = () => {
     // First burst from the left
@@ -379,8 +362,8 @@ export default function Page() {
                       Contact Me
                     </MagneticButton>
                     <MagneticButton variant="outline" asChild>
-                      <Link href="/assets/resume/Elton_Teo_Resume.pdf" target="_blank">
-                        Download Resume
+                      <Link href="https://drive.google.com/file/d/1EnH7L0OymJF3ru6Np26POj115SvqpJMs/view" target="_blank">
+                        View Resume
                       </Link>
                     </MagneticButton>
                   </div>
