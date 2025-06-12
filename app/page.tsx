@@ -207,8 +207,8 @@ export default function Page() {
       company: "Infinito Blockchain Labs",
       period: "Sep 2018 - Feb 2019",
       description: [
-        "Delivered multiple feature updates to Infinito Wallet using React Native",
-        "Led development of a promotional UI module that increased in-app event participation",
+        "Delivered multiple feature updates to Infinito Wallet using React Native.",
+        "Led development of a promotional UI module that increased in-app event participation.",
         "Designed a modular unit testing system, improving test coverage and reducing post-release bugs.",
       ],
       skills: ["React Native", "Redux", "JavaScript", "Mobile Development", "UI/UX Design"],
