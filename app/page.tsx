@@ -180,22 +180,38 @@ export default function Page() {
   // Experience data
   const experienceData = [
     {
-      title: "Full Stack Intern",
+      title: "Full-Stack Developer Intern",
       company: "uParcel",
       period: "Sep 2024 - Apr 2025",
-      description: "An 8 month Internship as a Full-Stack Developer tasked with designing and writing with Python on Django framework for uParcel's backend services, as well as JavaScript on Next.js Framework for uParcel's web application.",
+      description: [
+        "Redeveloped customer-facing frontend with Next.js, improving responsiveness and usability.",
+        "Prototyped new admin portal, reducing task execution time.",
+        "Built middleware for live delivery tracking & reporting.",
+        "Reduced frontend bug backlog through proactive debugging.",
+      ],
+      skills: ["Python", "Django", "JavaScript", "Next.js", "Tailwind CSS", "RESTful APIs", "Docker", "Amazon Code Commit (Git)", "PostgreSQL"],
     },
     {
-      title: "Technical Intern",
+      title: "Mobile Developer Intern",
       company: "TinyMOS",
       period: "Feb 2019 - Oct 2019",
-      description: "A 9 month Internship in a startup company that created the world's smallest astronomy camera as a cross platform mobile developer using Xamarin for their application, the Nano1Companion.",
+      description: [
+        "Developed live feed + wireless control in Xamarin app for Nano1 camera.",
+        "Migrated Java project to C# for better cross-platform support.",
+        "Supported QA and product launch operations.",
+      ],
+      skills: ["Xamarin", "C#", "Java", "Cross-Platform Development", "UI/UX Design"],
     },
     {
-      title: "Technical Intern",
+      title: "Mobile Developer Intern",
       company: "Infinito Blockchain Labs",
       period: "Sep 2018 - Feb 2019",
-      description: "A 6 month internship at Infinity Blockchain Labs, developing frontend features for Infinito Wallet using React Native, a universal Crypto-Wallet.",
+      description: [
+        "Delivered multiple feature updates to Infinito Wallet using React Native",
+        "Led development of a promotional UI module that increased in-app event participation",
+        "Designed a modular unit testing system, improving test coverage and reducing post-release bugs.",
+      ],
+      skills: ["React Native", "Redux", "JavaScript", "Mobile Development", "UI/UX Design"],
     },
   ];
 
@@ -256,9 +272,27 @@ export default function Page() {
   }, [scrollYProgress])
 
   useEffect(() => {
+    // Check if critical resources are loaded
+    Promise.all([
+      // Add your critical resource loading checks here
+      document.fonts.ready,
+    ]).then(() => {
+      setIsLoading(false)
+    })
+  }, [])
+
+  useEffect(() => {
     // Initialize video refs array
     videoRefs.current = videoRefs.current.slice(0, projects.length);
   }, [projects.length]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    )
+  }
 
 
   const handleConfetti = () => {
@@ -561,7 +595,7 @@ export default function Page() {
             </motion.h2>
             
             {/* Desktop Timeline View */}
-            <div className="hidden md:block max-w-2xl mx-auto">
+            <div className="hidden md:block max-w-4xl mx-auto">
               <div className="relative space-y-8">
                 {/* Animated Timeline Line - keeping this animation */}
                 <motion.div 
@@ -577,16 +611,28 @@ export default function Page() {
                     key={index} 
                     className={`relative ${
                       index % 2 === 0 ? 'ml-auto pl-8' : 'mr-auto pr-8'
-                    } w-1/2`}
+                    } w-[calc(50%-2rem)]`}
                   >
                     {/* Content Card */}
                     <div className="rounded-lg border bg-card p-6 shadow-sm">
                       <h3 className="font-semibold text-card-foreground">{experience.title}</h3>
                       <p className="text-sm text-muted-foreground mt-1">{experience.company}</p>
                       <p className="text-sm text-muted-foreground mt-1">{experience.period}</p>
-                      <p className="mt-3 text-sm leading-relaxed text-card-foreground/80">
-                        {experience.description}
-                      </p>
+                      <ul className="mt-3 space-y-2 text-sm leading-relaxed text-card-foreground/80">
+                        {experience.description.map((point, index) => (
+                          <li key={index} className="flex items-start">
+                            <span className="mr-2">•</span>
+                            <span>{point}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="flex flex-wrap gap-2 mt-4">
+                        {experience.skills.map((skill, skillIndex) => (
+                          <Badge key={skillIndex} variant="secondary" className="text-xs">
+                            {skill}
+                          </Badge>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -594,7 +640,7 @@ export default function Page() {
             </div>
 
             {/* Mobile Card View - removing animations */}
-            <div className="md:hidden space-y-4">
+            <div className="md:hidden space-y-4 max-w-2xl mx-auto">
               {experienceData.map((experience, index) => (
                 <div
                   key={index}
@@ -603,9 +649,21 @@ export default function Page() {
                     <h3 className="font-semibold text-card-foreground">{experience.title}</h3>
                     <p className="text-sm text-muted-foreground mt-1">{experience.company}</p>
                     <p className="text-sm text-muted-foreground mt-1">{experience.period}</p>
-                    <p className="mt-3 text-sm leading-relaxed text-card-foreground/80">
-                      {experience.description}
-                    </p>
+                    <ul className="mt-3 space-y-2 text-sm leading-relaxed text-card-foreground/80">
+                      {experience.description.map((point, index) => (
+                        <li key={index} className="flex items-start">
+                          <span className="mr-2">•</span>
+                          <span>{point}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      {experience.skills.map((skill, skillIndex) => (
+                        <Badge key={skillIndex} variant="secondary" className="text-xs">
+                          {skill}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
                 </div>
               ))}
